@@ -1,81 +1,30 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Uji API Whoami</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      line-height: 1.6;
-    }
-    h1 {
-      color: #2c3e50;
-      border-bottom: 2px solid #eee;
-      padding-bottom: 10px;
-    }
-    button {
-      background-color: #3498db;
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #2980b9;
-    }
-    pre {
-      background-color: #f7f7f7;
-      padding: 15px;
-      border-radius: 5px;
-      white-space: pre-wrap;
-    }
-  </style>
-</head>
-<body>
-  <h1>Pengujian API Request Header Parser</h1>
-  <p>Klik tombol di bawah untuk menguji endpoint <code>/api/whoami</code>:</p>
-  
-  <button id="testButton">Uji API</button>
-  
-  <h2>Hasil:</h2>
-  <pre id="result">Hasil akan ditampilkan di sini...</pre>
+<html>
+   <head>
+      <title>Request Header Parser</title>
+      <link rel="shortcut icon" href="https://cdn.hyperdev.com/us-east-1%3A52a203ff-088b-420f-81be-45bf559d01b1%2Ffavicon.ico" type="image/x-icon"/>
+      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+      <link href="style.css" rel="stylesheet" type="text/css">
+   </head>
 
-  <script>
-    document.getElementById('testButton').addEventListener('click', async () => {
-      try {
-        const response = await fetch('/api/whoami');
-        const data = await response.json();
-        
-        // Mengecek apakah semua kunci yang diperlukan ada
-        const hasIpaddress = 'ipaddress' in data;
-        const hasLanguage = 'language' in data;
-        const hasSoftware = 'software' in data;
-        
-        // Menampilkan hasil
-        const resultElement = document.getElementById('result');
-        resultElement.innerHTML = JSON.stringify(data, null, 2) + '\n\n';
-        
-        // Menampilkan hasil pemeriksaan kunci
-        resultElement.innerHTML += 'Pemeriksaan kunci:\n';
-        resultElement.innerHTML += `- Kunci "ipaddress": ${hasIpaddress ? '✅ Ada' : '❌ Tidak ada'}\n`;
-        resultElement.innerHTML += `- Kunci "language": ${hasLanguage ? '✅ Ada' : '❌ Tidak ada'}\n`;
-        resultElement.innerHTML += `- Kunci "software": ${hasSoftware ? '✅ Ada' : '❌ Tidak ada'}\n`;
-        
-        // Kesimpulan
-        if (hasIpaddress && hasLanguage && hasSoftware) {
-          resultElement.innerHTML += '\n✅ SEMUA TES BERHASIL!';
-        } else {
-          resultElement.innerHTML += '\n❌ ADA TES YANG GAGAL';
-        }
-      } catch (error) {
-        document.getElementById('result').textContent = 'Error: ' + error.message;
-      }
-    });
-  </script>
-</body>
+   <body>
+      <div class="container">
+        <h2>Request Header Parser Microservice</h2>
+
+        <h3>Example Usage:</h3>
+        <p>
+          <a href="api/whoami">[base url]/api/whoami</a>
+        </p>
+
+        <h3>Example Output:</h3>
+        <p>
+          <code>{"ipaddress":"::ffff:159.20.14.100","language":"en-US,en;q=0.5",<br>"software":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0"}</code>
+        </p>
+      </div>
+      <div class="footer">
+        <p>
+          by <a href="https://www.freecodecamp.org">freeCodeCamp</a>
+        </p>
+      </div>
+   </body>
 </html>

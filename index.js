@@ -1,48 +1,38 @@
-// index.js - Ini adalah file utama untuk Request Header Parser Microservice
+// index.js
+// where your node app starts
 
-// Import package yang diperlukan
+// init project
 require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const app = express();
+var express = require('express');
+var app = express();
 
-// Konfigurasi port
-const port = process.env.PORT || 3000;
+// enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
+// so that your API is remotely testable by FCC 
+var cors = require('cors');
+app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
 
-// Aktifkan CORS untuk semua permintaan
-app.use(cors({ optionsSuccessStatus: 200 }));
-
-// Middleware untuk file statis
+// http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
-// Route untuk halaman utama
-app.get('/', (req, res) => {
+// http://expressjs.com/en/starter/basic-routing.html
+app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-// Endpoint API utama untuk header parser
-app.get('/api/whoami', function(req, res) {
-  // Ambil alamat IP dari header
-  let ip = req.headers['x-forwarded-for'] || 
-           req.connection.remoteAddress ||
-           req.socket.remoteAddress ||
-           '127.0.0.1';
-  
-  // Jika ada beberapa IP (karena proxy), ambil yang pertama
-  if (ip.includes(',')) {
-    ip = ip.split(',')[0].trim();
-  }
-  
-  // Kembalikan objek JSON dengan tiga properti yang diperlukan
+// your first API endpoint... 
+app.get("/api/hello", function (req, res) {
+  res.json({greeting: 'hello API'});
+});
+
+app.get("/api/whoami", function (req, res) {
   res.json({
-    ipaddress: ip,
-    language: req.headers['accept-language'],
-    software: req.headers['user-agent']
+    ipaddress: req.ip,
+    language: req.headers["accept-language"],
+    software: req.headers["user-agent"]
   });
 });
 
-// Jalankan server
-app.listen(port, function() {
-  console.log(`Listening on port ${port}`);
-  console.log(`Server berjalan di: http://localhost:${port}`);
+// listen for requests :)
+var listener = app.listen(process.env.PORT || 3000, function () {
+  console.log('Your app is listening on port ' + listener.address().port);
 });
