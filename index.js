@@ -21,43 +21,28 @@ app.get('/', (req, res) => {
 });
 
 // Endpoint API utama untuk header parser
-app.get('/api/whoami', (req, res) => {
-  // Untuk FreeCodeCamp test, kita perlu memastikan sesuai dengan nama properti yang tepat
-  // Ambil IP address - coba beberapa metode untuk memastikan mendapatkan nilai
-  let ipaddress = req.headers['x-forwarded-for'] || 
-                  req.connection.remoteAddress ||
-                  req.socket.remoteAddress ||
-                  req.connection.socket?.remoteAddress || 
-                  '127.0.0.1';
+app.get('/api/whoami', function(req, res) {
+  // Ambil alamat IP dari header
+  let ip = req.headers['x-forwarded-for'] || 
+           req.connection.remoteAddress ||
+           req.socket.remoteAddress ||
+           '127.0.0.1';
   
-  // Jika IP berisi koma (karena proxy), ambil alamat asli
-  if (ipaddress && ipaddress.includes(',')) {
-    ipaddress = ipaddress.split(',')[0].trim();
+  // Jika ada beberapa IP (karena proxy), ambil yang pertama
+  if (ip.includes(',')) {
+    ip = ip.split(',')[0].trim();
   }
   
-  // Ambil bahasa dari header accept-language
-  const language = req.headers['accept-language'];
-  
-  // Ambil informasi software (user-agent)
-  const software = req.headers['user-agent'];
-  
-  // Log untuk debugging
-  console.log({
-    ipaddress,
-    language,
-    software
-  });
-
-  // Kirim respons dalam format JSON dengan nama properti yang sesuai
+  // Kembalikan objek JSON dengan tiga properti yang diperlukan
   res.json({
-    ipaddress: ipaddress,
-    language: language,
-    software: software
+    ipaddress: ip,
+    language: req.headers['accept-language'],
+    software: req.headers['user-agent']
   });
 });
 
 // Jalankan server
-app.listen(port, () => {
-  console.log(`Server berjalan di port ${port}`);
-  console.log(`Akses aplikasi di: http://localhost:${port}`);
+app.listen(port, function() {
+  console.log(`Listening on port ${port}`);
+  console.log(`Server berjalan di: http://localhost:${port}`);
 });
