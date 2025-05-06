@@ -1,34 +1,39 @@
 <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Header Parser Microservice</title>
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>Request Header Parser Microservice</h1>
+    
+    <div class="description">
+      <p>Microservice ini mengekstrak informasi dari header permintaan HTTP dan mengembalikannya sebagai objek JSON.</p>
+    </div>
 
-<html>
+    <div class="usage">
+      <h2>Contoh Penggunaan:</h2>
+      <a href="/api/whoami" target="_blank" class="btn">[URL Proyek]/api/whoami</a>
+    </div>
 
-   <head>
-      <title>Request Header Parser</title>
-      <link rel="shortcut icon" href="https://cdn.hyperdev.com/us-east-1%3A52a203ff-088b-420f-81be-45bf559d01b1%2Ffavicon.ico" type="image/x-icon"/>
-      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-      <link href="style.css" rel="stylesheet" type="text/css">
-   </head>
+    <div class="output">
+      <h2>Contoh Output:</h2>
+      <pre>
+{
+  "ipaddress": "192.168.1.1",
+  "language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7",
+  "software": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+}
+      </pre>
+    </div>
 
-   <body>
-      <div class="container">
-        <h1>Request Header Parser Microservice</h1>
-
-        <h2>Example Usage:</h2>
-        <p>
-          <a href="api/whoami">[base url]/api/whoami</a>
-        </p>
-
-        <h2>Example Output:</h2>
-        <p>
-          <code>{"ipaddress":"::ffff:159.20.14.100","language":"en-US,en;q=0.5",<br>"software":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0"}</code>
-        </p>
-      </div>
-      <div class="footer">
-        <p>
-          by <a href="https://www.freecodecamp.org">freeCodeCamp</a>
-        </p>
-      </div>
-   </body>
-
-
+    <div class="footer">
+      <p>Proyek ini dibuat untuk FreeCodeCamp Back End Development and APIs Certification</p>
+    </div>
+  </div>
+</body>
 </html>
